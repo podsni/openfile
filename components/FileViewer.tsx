@@ -1,8 +1,6 @@
 'use client';
 import { detectFileType } from '@/lib/detectFileType';
-
-// Viewer components will be imported here as they are implemented
-// For now, render a placeholder for unimplemented types
+import { PdfViewer } from '@/components/viewers/PdfViewer';
 
 interface Props {
   src: string;
@@ -13,6 +11,8 @@ export function FileViewer({ src, name }: Props) {
   const type = detectFileType(name);
 
   switch (type) {
+    case 'pdf':
+      return <PdfViewer src={src} />;
     case 'image':
       return (
         <div className="flex items-center justify-center flex-1 p-4">
