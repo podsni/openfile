@@ -8,6 +8,7 @@ import { MarkdownViewer } from '@/components/viewers/MarkdownViewer';
 import { TextViewer } from '@/components/viewers/TextViewer';
 import { DocxViewer } from '@/components/viewers/DocxViewer';
 import { ImageViewer } from '@/components/viewers/ImageViewer';
+import { MermaidViewer } from '@/components/viewers/MermaidViewer';
 
 interface Props {
   src: string;
@@ -34,6 +35,8 @@ export function FileViewer({ src, name }: Props) {
       return <DocxViewer src={src} />;
     case 'image':
       return <ImageViewer src={src} name={name} />;
+    case 'mermaid':
+      return <MermaidViewer src={src} />;
     default:
       return (
         <div className="flex flex-col items-center justify-center flex-1 gap-3 text-zinc-500">
