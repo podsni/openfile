@@ -3,6 +3,7 @@ import { detectFileType } from '@/lib/detectFileType';
 import { PdfViewer } from '@/components/viewers/PdfViewer';
 import { CsvViewer } from '@/components/viewers/CsvViewer';
 import { JsonViewer } from '@/components/viewers/JsonViewer';
+import { HtmlViewer } from '@/components/viewers/HtmlViewer';
 
 interface Props {
   src: string;
@@ -19,6 +20,8 @@ export function FileViewer({ src, name }: Props) {
       return <CsvViewer src={src} />;
     case 'json':
       return <JsonViewer src={src} />;
+    case 'html':
+      return <HtmlViewer src={src} />;
     case 'image':
       return (
         <div className="flex items-center justify-center flex-1 p-4">
