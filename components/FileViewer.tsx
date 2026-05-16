@@ -7,6 +7,7 @@ import { HtmlViewer } from '@/components/viewers/HtmlViewer';
 import { MarkdownViewer } from '@/components/viewers/MarkdownViewer';
 import { TextViewer } from '@/components/viewers/TextViewer';
 import { DocxViewer } from '@/components/viewers/DocxViewer';
+import { ImageViewer } from '@/components/viewers/ImageViewer';
 
 interface Props {
   src: string;
@@ -32,12 +33,7 @@ export function FileViewer({ src, name }: Props) {
     case 'docx':
       return <DocxViewer src={src} />;
     case 'image':
-      return (
-        <div className="flex items-center justify-center flex-1 p-4">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={src} alt={name} className="max-w-full max-h-full object-contain rounded" />
-        </div>
-      );
+      return <ImageViewer src={src} name={name} />;
     default:
       return (
         <div className="flex flex-col items-center justify-center flex-1 gap-3 text-zinc-500">
