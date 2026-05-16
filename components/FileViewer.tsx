@@ -9,6 +9,7 @@ import { TextViewer } from '@/components/viewers/TextViewer';
 import { DocxViewer } from '@/components/viewers/DocxViewer';
 import { ImageViewer } from '@/components/viewers/ImageViewer';
 import { MermaidViewer } from '@/components/viewers/MermaidViewer';
+import { XlsxViewer } from '@/components/viewers/XlsxViewer';
 
 interface Props {
   src: string;
@@ -37,6 +38,8 @@ export function FileViewer({ src, name }: Props) {
       return <ImageViewer src={src} name={name} />;
     case 'mermaid':
       return <MermaidViewer src={src} />;
+    case 'xlsx':
+      return <XlsxViewer src={src} />;
     default:
       return (
         <div className="flex flex-col items-center justify-center flex-1 gap-3 text-zinc-500">
