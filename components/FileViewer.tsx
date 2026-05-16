@@ -6,6 +6,7 @@ import { JsonViewer } from '@/components/viewers/JsonViewer';
 import { HtmlViewer } from '@/components/viewers/HtmlViewer';
 import { MarkdownViewer } from '@/components/viewers/MarkdownViewer';
 import { TextViewer } from '@/components/viewers/TextViewer';
+import { DocxViewer } from '@/components/viewers/DocxViewer';
 
 interface Props {
   src: string;
@@ -28,6 +29,8 @@ export function FileViewer({ src, name }: Props) {
       return <MarkdownViewer src={src} />;
     case 'txt':
       return <TextViewer src={src} />;
+    case 'docx':
+      return <DocxViewer src={src} />;
     case 'image':
       return (
         <div className="flex items-center justify-center flex-1 p-4">
