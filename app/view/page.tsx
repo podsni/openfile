@@ -1,6 +1,6 @@
 'use client';
 export const dynamic = 'force-dynamic';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useCallback } from 'react';
 import { TabBar } from '@/components/TabBar';
 import { FileViewer } from '@/components/FileViewer';
@@ -10,7 +10,6 @@ import Link from 'next/link';
 
 function ViewerContent() {
   const params = useSearchParams();
-  const router = useRouter();
   const src = params.get('src') ?? '';
   const name = params.get('name') ?? 'file';
   const { tabs, activeId, openTab } = useTabs();
@@ -23,8 +22,8 @@ function ViewerContent() {
   const handleDroppedFile = useCallback((file: File) => {
     const url = URL.createObjectURL(file);
     openTab(file.name, url);
-    router.replace(`/view?src=${encodeURIComponent(url)}&name=${encodeURIComponent(file.name)}`);
-  }, [openTab, router]);
+    // Do NOT router.replace here — that would trigger useEffect → openTab again (duplicate tab bug)
+  }, [openTab]);
 
   const activeTab = tabs.find(t => t.id === activeId);
 

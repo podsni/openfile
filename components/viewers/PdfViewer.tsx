@@ -19,9 +19,22 @@ export function PdfViewer({ src }: { src: string }) {
   const [toc, setToc] = useState<TocItem[]>([]);
   const [showToc, setShowToc] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [pdfData, setPdfData] = useState<{ data: ArrayBuffer } | string>(src);
   const pageRefs = useRef<(HTMLDivElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // For blob: URLs, fetch as ArrayBuffer so pdfjs can read it cross-origin
+  useEffect(() => {
+    if (src.startsWith('blob:')) {
+      fetch(src)
+        .then(r => r.arrayBuffer())
+        .then(buf => setPdfData({ data: buf }))
+        .catch(e => setError(e.message));
+    } else {
+      setPdfData(src);
+    }
+  }, [src]);
 
   // Measure container width
   useEffect(() => {
@@ -197,7 +210,7 @@ export function PdfViewer({ src }: { src: string }) {
         <div ref={scrollRef} className="flex-1 overflow-auto">
           <div className="flex flex-col items-center py-6 gap-4 px-4">
             <Document
-              file={src}
+              file={pdfData}
               onLoadSuccess={onLoadSuccess}
               onLoadError={e => setError(e.message)}
               loading={
