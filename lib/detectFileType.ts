@@ -1,9 +1,10 @@
 export type FileType =
-  | 'pdf' | 'csv' | 'json' | 'html' | 'md' | 'txt'
+  | 'pdf' | 'epub' | 'csv' | 'json' | 'html' | 'md' | 'txt'
   | 'docx' | 'image' | 'mermaid' | 'xlsx' | 'unknown';
 
 const EXT_MAP: Record<string, FileType> = {
-  pdf: 'pdf', csv: 'csv', json: 'json',
+  pdf: 'pdf', epub: 'epub',
+  csv: 'csv', json: 'json',
   html: 'html', htm: 'html',
   md: 'md', markdown: 'md',
   txt: 'txt',

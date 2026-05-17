@@ -11,6 +11,7 @@ const TextViewer     = dynamic(() => import('./viewers/TextViewer').then(m => ({
 const DocxViewer     = dynamic(() => import('./viewers/DocxViewer').then(m => ({ default: m.DocxViewer })),    { ssr: false });
 const ImageViewer    = dynamic(() => import('./viewers/ImageViewer').then(m => ({ default: m.ImageViewer })),  { ssr: false });
 const MermaidViewer  = dynamic(() => import('./viewers/MermaidViewer').then(m => ({ default: m.MermaidViewer })), { ssr: false });
+const EpubViewer     = dynamic(() => import('./viewers/EpubViewer').then(m => ({ default: m.EpubViewer })),    { ssr: false });
 const XlsxViewer     = dynamic(() => import('./viewers/XlsxViewer').then(m => ({ default: m.XlsxViewer })),   { ssr: false });
 
 interface Props {
@@ -23,6 +24,7 @@ export function FileViewer({ src, name }: Props) {
 
   switch (type) {
     case 'pdf':      return <PdfViewer src={src} />;
+    case 'epub':     return <EpubViewer src={src} />;
     case 'csv':      return <CsvViewer src={src} />;
     case 'json':     return <JsonViewer src={src} />;
     case 'html':     return <HtmlViewer src={src} />;
