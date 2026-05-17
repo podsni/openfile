@@ -1,9 +1,8 @@
 'use client';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -14,6 +13,16 @@ export function PdfViewer({ src }: { src: string }) {
   const [numPages, setNumPages] = useState<number>(0);
   const [page, setPage] = useState(1);
   const [error, setError] = useState<string | null>(null);
+  const [width, setWidth] = useState(600);
+
+  useEffect(() => {
+    function measure() {
+      setWidth(Math.min(window.innerWidth - 32, 860));
+    }
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
 
   const onLoadSuccess = useCallback(({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -26,49 +35,72 @@ export function PdfViewer({ src }: { src: string }) {
 
   if (error) {
     return (
-      <div className="flex flex-1 items-center justify-center text-red-400 p-8 text-center">
+      <div className="flex h-full items-center justify-center text-red-400/80 p-8 text-center text-sm">
         Failed to load PDF: {error}
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col h-full items-center overflow-auto py-4 gap-4 px-2">
-      <Document
-        file={src}
-        onLoadSuccess={onLoadSuccess}
-        onLoadError={onLoadError}
-        className="flex flex-col items-center"
-      >
-        <Page
-          pageNumber={page}
-          className="shadow-xl rounded"
-          renderTextLayer
-          renderAnnotationLayer
-        />
-      </Document>
+    <div className="flex flex-col h-full bg-[#111113]">
+      {/* PDF scroll area */}
+      <div className="flex-1 overflow-auto flex flex-col items-center py-6 gap-3 px-4">
+        <Document
+          file={src}
+          onLoadSuccess={onLoadSuccess}
+          onLoadError={onLoadError}
+          loading={
+            <div className="flex items-center justify-center py-20 text-zinc-600 text-sm">
+              Loading PDF…
+            </div>
+          }
+        >
+          {/* Render all pages */}
+          {Array.from({ length: numPages }, (_, i) => (
+            <div key={i + 1} className="relative">
+              <Page
+                pageNumber={i + 1}
+                width={width}
+                className="shadow-2xl"
+                renderTextLayer
+                renderAnnotationLayer
+              />
+              {/* Page number badge */}
+              <div className="absolute bottom-2 right-2 bg-black/50 text-white/50 text-[10px] px-1.5 py-0.5 rounded font-mono">
+                {i + 1}
+              </div>
+            </div>
+          ))}
+        </Document>
+      </div>
 
-      {numPages > 1 && (
-        <div className="flex items-center gap-3 sticky bottom-4 bg-zinc-900 border border-zinc-700 rounded-full px-4 py-2 shadow-lg">
-          <button
-            onClick={() => setPage(p => Math.max(1, p - 1))}
-            disabled={page <= 1}
-            className="p-1 rounded hover:bg-zinc-700 disabled:opacity-30 transition"
-            aria-label="Previous page"
-          >
-            <ChevronLeft size={18} />
-          </button>
-          <span className="text-sm text-zinc-300 min-w-[80px] text-center">
-            {page} / {numPages}
+      {/* Bottom bar */}
+      {numPages > 0 && (
+        <div className="shrink-0 flex items-center justify-between px-4 py-2 border-t border-white/[0.06] bg-[#0c0c0e]">
+          <span className="text-[11px] text-zinc-600 font-mono">
+            {numPages} {numPages === 1 ? 'page' : 'pages'}
           </span>
-          <button
-            onClick={() => setPage(p => Math.min(numPages, p + 1))}
-            disabled={page >= numPages}
-            className="p-1 rounded hover:bg-zinc-700 disabled:opacity-30 transition"
-            aria-label="Next page"
-          >
-            <ChevronRight size={18} />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setPage(p => Math.max(1, p - 1))}
+              disabled={page <= 1}
+              className="px-2 py-1 text-[11px] text-zinc-500 hover:text-zinc-200 disabled:opacity-20 transition-colors"
+              aria-label="Previous page"
+            >
+              ← Prev
+            </button>
+            <span className="text-[11px] text-zinc-500 font-mono min-w-[60px] text-center">
+              {page} / {numPages}
+            </span>
+            <button
+              onClick={() => setPage(p => Math.min(numPages, p + 1))}
+              disabled={page >= numPages}
+              className="px-2 py-1 text-[11px] text-zinc-500 hover:text-zinc-200 disabled:opacity-20 transition-colors"
+              aria-label="Next page"
+            >
+              Next →
+            </button>
+          </div>
         </div>
       )}
     </div>

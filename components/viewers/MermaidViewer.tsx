@@ -35,7 +35,7 @@ export function MermaidViewer({ src }: { src: string }) {
   }
 
   return (
-    <div className="flex flex-1 items-center justify-center overflow-auto p-8">
+    <div className="flex h-full items-center justify-center overflow-auto p-8">
       <div ref={containerRef} className="max-w-full" />
     </div>
   );
