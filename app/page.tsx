@@ -2,10 +2,11 @@
 import { useRouter } from 'next/navigation';
 import { FileDropzone } from '@/components/FileDropzone';
 import { UrlInput } from '@/components/UrlInput';
+import { GlobalDropZone } from '@/components/GlobalDropZone';
 import { ArrowUpRight } from 'lucide-react';
 
 const FORMATS = [
-  'PDF', 'CSV', 'JSON', 'Markdown', 'DOCX', 'XLSX', 'HTML', 'Images', 'Mermaid', 'TXT'
+  'PDF', 'EPUB', 'CSV', 'JSON', 'Markdown', 'DOCX', 'XLSX', 'HTML', 'Images', 'Mermaid', 'TXT'
 ];
 
 export default function Home() {
@@ -23,9 +24,12 @@ export default function Home() {
 
   return (
     <div className="flex flex-col flex-1 overflow-auto bg-[#0c0c0e]">
+      {/* Global drag & drop overlay — works anywhere on landing page too */}
+      <GlobalDropZone onFile={handleFile} />
+
       {/* Nav */}
       <nav className="flex items-center justify-between px-6 sm:px-10 py-4 border-b border-white/[0.06]">
-        <span className="text-[13px] font-medium tracking-[0.12em] uppercase text-zinc-300 letter-spacing-widest">
+        <span className="text-[13px] font-medium tracking-[0.12em] uppercase text-zinc-300">
           OpenFile
         </span>
         <a
@@ -72,10 +76,7 @@ export default function Home() {
           {/* Format list */}
           <div className="flex flex-wrap justify-center gap-x-3 gap-y-1.5">
             {FORMATS.map(f => (
-              <span
-                key={f}
-                className="text-[11px] text-zinc-600 tracking-wide"
-              >
+              <span key={f} className="text-[11px] text-zinc-600 tracking-wide">
                 {f}
               </span>
             ))}

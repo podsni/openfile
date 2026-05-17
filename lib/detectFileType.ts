@@ -15,6 +15,8 @@ const EXT_MAP: Record<string, FileType> = {
 };
 
 export function detectFileType(filename: string): FileType {
-  const ext = filename.split('.').pop()?.toLowerCase() ?? '';
+  // Strip query string and hash before extracting extension
+  const clean = filename.split('?')[0].split('#')[0];
+  const ext = clean.split('.').pop()?.toLowerCase() ?? '';
   return EXT_MAP[ext] ?? 'unknown';
 }
