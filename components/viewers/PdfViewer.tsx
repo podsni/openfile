@@ -33,7 +33,7 @@ export function PdfViewer({ src }: { src: string }) {
   }
 
   return (
-    <div className="flex flex-col flex-1 items-center overflow-auto py-4 gap-4">
+    <div className="flex flex-col h-full items-center overflow-auto py-4 gap-4 px-2">
       <Document
         file={src}
         onLoadSuccess={onLoadSuccess}

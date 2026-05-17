@@ -45,7 +45,7 @@ export function XlsxViewer({ src }: { src: string }) {
   const sheet = sheets[activeSheet];
 
   return (
-    <div className="flex flex-col flex-1 overflow-hidden">
+    <div className="flex flex-col h-full overflow-hidden">
       {sheets.length > 1 && (
         <div className="flex gap-1 px-4 pt-3 border-b border-zinc-800 overflow-x-auto">
           {sheets.map((s, i) => (

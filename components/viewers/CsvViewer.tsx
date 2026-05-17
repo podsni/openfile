@@ -36,7 +36,7 @@ export function CsvViewer({ src }: { src: string }) {
   }
 
   return (
-    <div className="flex-1 overflow-auto p-4">
+    <div className="h-full overflow-auto p-4">
       <table className="w-full text-sm border-collapse">
         <thead>
           <tr className="sticky top-0 bg-zinc-900 z-10">

@@ -25,7 +25,7 @@ export function TextViewer({ src }: { src: string }) {
   }
 
   return (
-    <div className="flex-1 overflow-auto p-4">
+    <div className="h-full overflow-auto p-4 sm:p-8">
       <pre className="text-sm leading-relaxed text-zinc-300 whitespace-pre-wrap break-words font-mono max-w-4xl mx-auto">
         {content}
       </pre>

@@ -27,8 +27,8 @@ export function MarkdownViewer({ src }: { src: string }) {
   }
 
   return (
-    <div className="flex-1 overflow-auto px-4 py-6">
-      <article className="prose prose-invert prose-zinc max-w-3xl mx-auto">
+    <div className="h-full overflow-auto px-4 sm:px-8 py-8">
+      <article className="prose prose-invert prose-zinc prose-sm sm:prose-base max-w-3xl mx-auto">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
           {content ?? ''}
         </ReactMarkdown>

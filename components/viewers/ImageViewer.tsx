@@ -2,7 +2,7 @@
 
 export function ImageViewer({ src, name }: { src: string; name: string }) {
   return (
-    <div className="flex flex-1 items-center justify-center p-4 overflow-auto">
+    <div className="flex h-full items-center justify-center p-4 overflow-auto bg-zinc-950/50">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}

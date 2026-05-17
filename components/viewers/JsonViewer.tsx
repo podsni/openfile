@@ -36,7 +36,7 @@ export function JsonViewer({ src }: { src: string }) {
   }
 
   return (
-    <div className="flex-1 overflow-auto p-4">
+    <div className="h-full overflow-auto p-4 sm:p-8">
       <pre className="text-sm leading-relaxed">
         <code
           className="hljs language-json"
